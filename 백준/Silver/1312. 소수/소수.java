@@ -1,0 +1,24 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int son = Integer.parseInt(st.nextToken());
+        int par = Integer.parseInt(st.nextToken());
+        int num = Integer.parseInt(st.nextToken());
+        int result = 0;
+
+        for (int i = 0; i < num; i++) {
+            son %= par;
+            son *= 10;
+            result = son/par;
+        }
+        System.out.println(result);
+    }
+}
