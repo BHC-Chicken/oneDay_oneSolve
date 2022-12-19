@@ -22,6 +22,7 @@ public class Main {
         }
 
         int loop = Integer.parseInt(br.readLine());
+        StringBuilder sb = new StringBuilder();
 
         while (loop-- > 0) {
             int sum = 0;
@@ -37,8 +38,8 @@ public class Main {
                     sum += arr[i][x];
                 }
             }
-
-            System.out.println(sum);
+            sb.append(sum).append("\n");
         }
+        System.out.println(sb);
     }
 }
