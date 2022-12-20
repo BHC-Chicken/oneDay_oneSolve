@@ -8,18 +8,20 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        Stack<Integer> stack = new Stack<>();
-
         int loop = Integer.parseInt(br.readLine());
+        int [] arr = new int[100001];
         int sum = 0;
+        int count = 0;
 
         while (loop-- > 0) {
             int num = Integer.parseInt(br.readLine());
             if (num != 0) {
+                count ++;
                 sum += num;
-                stack.push(num);
+                arr[count] = num;
             } else {
-                sum -= stack.pop();
+                sum -= arr[count];
+                count--;
             }
         }
 
