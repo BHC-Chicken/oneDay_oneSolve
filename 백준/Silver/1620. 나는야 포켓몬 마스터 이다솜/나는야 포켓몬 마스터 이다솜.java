@@ -24,12 +24,13 @@ public class Main {
 
         for (int i = 0; i < correct; i++) {
             String s = br.readLine();
-            try {
+            if ((int) s.charAt(0) >47 && (int) s.charAt(0) < 58 ) {
                 int num = Integer.parseInt(s);
                 sb.append(dogam.get(num)).append("\n");
-            } catch (Exception e) {
+            } else {
                 sb.append(dogam2.get(s)).append("\n");
             }
+
         }
         System.out.println(sb);
     }
