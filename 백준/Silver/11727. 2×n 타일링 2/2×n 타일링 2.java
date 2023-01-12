@@ -15,7 +15,7 @@ public class Main {
         arr[3] = 5;
 
         for (int i = 4; i <= num; i++) {
-            arr[i] = ((arr[i - 2] * 2) + arr[i - 1]) % 10007;
+            arr[i] = ((arr[i - 2] * 2 % 10007) + (arr[i - 1]) % 10007) % 10007;
         }
 
         System.out.println(arr[num]);
