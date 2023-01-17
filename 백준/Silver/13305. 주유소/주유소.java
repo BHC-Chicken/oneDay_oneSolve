@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int city = Integer.parseInt(br.readLine());
+        long city = Integer.parseInt(br.readLine());
         long sum = 0;
         long min = Integer.MAX_VALUE;
 
@@ -23,7 +23,7 @@ public class Main {
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < city - 1; i++) {
-            long num = Integer.parseInt(st.nextToken());
+            long num = Long.parseLong(st.nextToken());
             if (num < min) {
                 min = num;
             }
@@ -35,7 +35,7 @@ public class Main {
                 sum += oil.get(i) * load.get(i);
             } else {
                 for (int j = i; j < city - 1; j++) {
-                    sum += oil.get(i) * load.get(j);
+                    sum += min * load.get(j);
                 }
                 break;
             }
