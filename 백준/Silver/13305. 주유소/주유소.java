@@ -10,20 +10,20 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int city = Integer.parseInt(br.readLine());
-        int sum = 0;
-        int min = Integer.MAX_VALUE;
+        long sum = 0;
+        long min = Integer.MAX_VALUE;
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        ArrayList<Integer> load = new ArrayList<>();
-        ArrayList<Integer> oil = new ArrayList<>();
+        ArrayList<Long> load = new ArrayList<>();
+        ArrayList<Long> oil = new ArrayList<>();
 
         for (int i = 0; i < city - 1; i++) {
-            load.add(Integer.parseInt(st.nextToken()));
+            load.add(Long.parseLong(st.nextToken()));
         }
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < city - 1; i++) {
-            int num = Integer.parseInt(st.nextToken());
+            long num = Integer.parseInt(st.nextToken());
             if (num < min) {
                 min = num;
             }
