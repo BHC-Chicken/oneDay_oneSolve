@@ -28,11 +28,11 @@ public class Main {
             }
         }
 
-        List<Integer> list = Arrays.asList(dp);
-        Collections.sort(list, Collections.reverseOrder());
+        int max = -1;
+        for (int i = 0; i < num; i++) {
+            max = Math.max(max, dp[i]);
+        }
 
-        Integer[] r = list.toArray(dp);
-
-        System.out.println(r[0]);
+        System.out.println(max);
     }
 }
