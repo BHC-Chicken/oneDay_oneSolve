@@ -1,58 +1,44 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 public class Main {
-
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
-        Set<Integer> set = new HashSet<>();
         StringBuilder sb = new StringBuilder();
 
-        int loop = Integer.parseInt(br.readLine());
+        int n = Integer.parseInt(br.readLine());
+        int bitset = 0;
 
-        for (int i = 0; i < loop; i++) {
-            st = new StringTokenizer(br.readLine());
-            String cal = st.nextToken();
-            int num = 0;
-            if (st.hasMoreTokens()) {
-                num = Integer.parseInt(st.nextToken());
-            }
-            switch (cal) {
+        while (n-- > 0) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            String cmd = st.nextToken();
+            int num;
+
+            switch (cmd) {
                 case "add":
-                    set.add(num);
+                    num = Integer.parseInt(st.nextToken());
+                    bitset |= (1 << (num - 1));
                     break;
                 case "remove":
-                    set.remove(num);
+                    num = Integer.parseInt(st.nextToken());
+                    bitset = bitset & ~(1 << (num - 1));
                     break;
                 case "check":
-                    if (set.contains(num)) {
-                        sb.append(1).append("\n");
-                    } else {
-                        sb.append(0).append("\n");
-                    }
+                    num = Integer.parseInt(st.nextToken());
+                    sb.append((bitset & (1 << (num -1))) != 0 ? "1\n" : "0\n");
                     break;
-                case "toggle":
-                    if (set.contains(num)) {
-                        set.remove(num);
-                    } else {
-                        set.add(num);
-                    }
+                case "toggle" :
+                    num = Integer.parseInt(st.nextToken());
+                    bitset ^= (1 << (num - 1));
                     break;
                 case "all":
-                    set.clear();
-                    for (int b = 1; b <= 20; b++) {
-                        set.add(b);
-                    }
+                    bitset |= (~0);
                     break;
-                case "empty":
-                    set.clear();
+                case "empty" :
+                    bitset &= 0;
+                    break;
             }
-
         }
         System.out.println(sb);
     }
