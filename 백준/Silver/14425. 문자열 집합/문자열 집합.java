@@ -1,6 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -13,14 +13,14 @@ public class Main {
         int m = Integer.parseInt(st.nextToken());
         int count = 0;
 
-        ArrayList<String> s = new ArrayList<>();
+        HashSet<String> hashSet = new HashSet<>();
 
         for (int i = 0; i < n; i++) {
-            s.add(br.readLine());
+            hashSet.add(br.readLine());
         }
 
         for (int i = 0; i < m; i++) {
-            if (s.contains(br.readLine())) {
+            if (hashSet.contains(br.readLine())) {
                 count++;
             }
         }
