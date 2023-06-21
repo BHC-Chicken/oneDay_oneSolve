@@ -10,17 +10,17 @@ public class Main {
         StringTokenizer st;
 
         while (true) {
-            String word1;
-            String word2;
+            String word = br.readLine();
 
-            try {
-                st = new StringTokenizer(br.readLine());
-
-                word1 = st.nextToken();
-                word2 = st.nextToken();
-            } catch (Exception e) {
+            if (word == null || word.length() == 0) {
                 break;
             }
+
+            st = new StringTokenizer(word);
+            
+            String word1 = st.nextToken();
+            String word2 = st.nextToken();
+
             int index = 0;
 
             for (int i = 0; i < word2.length(); i++) {
