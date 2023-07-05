@@ -4,41 +4,40 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-
-    static int[] arr;
-    static boolean[] visit;
+    static int n, m;
+    static int[] selected, used;
     static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
 
-        arr = new int[m];
-        visit = new boolean[n];
+        selected = new int[m + 1];
+        used = new int[n + 1];
 
-        dfs(n, m, 0);
-
-        System.out.println(sb);
+        rec_func(1);
+        System.out.println(sb.toString());
     }
 
-    public static void dfs(int n, int m, int depth) {
-        if (depth == m) {
-            for (int val : arr) {
-                sb.append(val).append(" ");
+    static void rec_func(int k) {
+        if (k == m + 1) {
+            for (int i = 1; i <= m; i++) {
+                sb.append(selected[i]).append(" ");
             }
             sb.append("\n");
-            return;
-        }
-
-        for (int i = 0; i < n; i++) {
-            if (!visit[i]) {
-                visit[i] = true;
-                arr[depth] = i + 1;
-                dfs(n, m, depth + 1);
-                visit[i] = false;
+        } else {
+            for (int cand = 1; cand <= n; cand++) {
+                if (used[cand] == 1) {
+                    continue;
+                }
+                selected[k] = cand;
+                used[cand] = 1;
+                rec_func(k + 1);
+                selected[k] = 0;
+                used[cand] = 0;
             }
         }
     }
