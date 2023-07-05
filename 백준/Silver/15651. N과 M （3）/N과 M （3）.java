@@ -4,10 +4,9 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
+    static int n, m;
+    static int[] selected;
     static StringBuilder sb = new StringBuilder();
-    static int n;
-    static int m;
-    static int[] arr;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -16,25 +15,24 @@ public class Main {
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
 
-        arr = new int[m];
+        selected = new int[m + 1];
 
-        dfs( 0);
-
-        System.out.println(sb);
+        rec_func(1);
+        System.out.println(sb.toString());
     }
 
-    static void dfs(int num) {
-        if (num == m) {
-            for (int b : arr) {
-                sb.append(b).append(" ");
+    static void rec_func(int k) {
+        if (k == m + 1) {
+            for (int i = 1; i <= m; i++) {
+                sb.append(selected[i]).append(" ");
             }
             sb.append("\n");
-            return;
-        }
-
-        for (int i = 1; i <= n; i++) {
-            arr[num] = i;
-            dfs(num + 1);
+        } else {
+            for (int cand = 1; cand <= n; cand++) {
+                selected[k] = cand;
+                rec_func(k + 1);
+                selected[k] = 0;
+            }
         }
     }
 }
