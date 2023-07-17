@@ -10,9 +10,9 @@ public class Main {
 
         for (int i = 0; i < word.length(); i++) {
             if (word.charAt(i) >= 65 && word.charAt(i) <= 90) {
-                sb.append(String.valueOf(word.charAt(i)).toLowerCase());
+                sb.append(Character.toLowerCase(word.charAt(i)));
             } else {
-                sb.append(String.valueOf(word.charAt(i)).toUpperCase());
+                sb.append(Character.toUpperCase(word.charAt(i)));
             }
         }
 
