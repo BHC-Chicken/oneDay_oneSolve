@@ -14,6 +14,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb = new StringBuilder();
 
         int u = Integer.parseInt(st.nextToken());
         int n = Integer.parseInt(st.nextToken());
@@ -45,10 +46,12 @@ public class Main {
 
         for (Auction auction : list) {
             if (result == auction.price) {
-                System.out.println(auction.name + " " + auction.price);
+                sb.append(auction.name).append(" ").append(auction.price);
                 break;
             }
         }
+
+        System.out.println(sb);
     }
 }
 
