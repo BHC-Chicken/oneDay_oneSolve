@@ -1,100 +1,50 @@
-import java.io.*;
-import java.util.*;
-
-class Round
-{
-    public int center;
-    public int radius;
-    public int left;
-    public int right;
-
-    public Round(int center, int radius) {
-        this.center = center;
-        this.radius = radius;
-
-        left = center - radius;
-        right = center + radius;
-    }
-
-}
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        ArrayList<Checker> list = new ArrayList<>();
+        StringTokenizer st;
 
-        FastReader fr = new FastReader();
-        int roundCnt = Integer.parseInt(fr.nextLine());
+        int n = Integer.parseInt(br.readLine());
 
-        String[] roundInfo;
-        ArrayList<Round> arrList = new ArrayList<>();
-        for(int i = 0; i < roundCnt; ++i)
-        {
-            roundInfo = fr.nextLine().split(" ");
+        for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
 
-            arrList.add(new Round(Integer.parseInt(roundInfo[0]), Integer.parseInt(roundInfo[1])));
+            int x = Integer.parseInt(st.nextToken());
+            int r = Integer.parseInt(st.nextToken());
+
+            list.add(new Checker(x, r));
         }
 
-        arrList.sort((r1, r2)-> r1.left-r2.left);
+        list.sort((r1, r2) -> r1.left - r2.left);
 
-        for(int i = 0; i < arrList.size(); ++i)
-        {
-            if((i+1 <arrList.size()) &&
-               (arrList.get(i).left <= arrList.get(i+1).left) &&
-               (arrList.get(i).right >= arrList.get(i+1).left) &&
-               (arrList.get(i).right <= arrList.get(i+1).right))
-            {
+        for (int i = 0; i < list.size() - 1; i++) {
+            if ((list.get(i).left <= list.get(i + 1).left) &&
+                    (list.get(i).right >= list.get(i + 1).left) &&
+                    (list.get(i).right <= list.get(i + 1).right)) {
+
                 System.out.println("NO");
+
                 return;
             }
         }
 
         System.out.println("YES");
     }
+}
 
-    static class FastReader
-    {
-        BufferedReader br;
-        StringTokenizer st;
+class Checker {
+    int left;
+    int right;
 
-        FastReader()
-        {
-            br = new BufferedReader(new InputStreamReader(System.in));
-        }
-        String next()
-        {
-            while(st == null || !st.hasMoreElements())
-            {
-                try
-                {
-                    st = new StringTokenizer(br.readLine());
-                }
-                catch(IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            return st.nextToken();
-        }
-
-        String nextLine()
-        {
-            String str = "";
-
-            try
-            {
-                str = br.readLine();
-            }
-            catch(IOException e)
-            {
-                e.printStackTrace();
-            }
-
-            return str;
-        }
-
-        int nextInt()
-        {
-            return Integer.parseInt(next());
-        }
+    public Checker(int x, int r) {
+        this.left = x - r;
+        this.right = x + r;
     }
+
 }
