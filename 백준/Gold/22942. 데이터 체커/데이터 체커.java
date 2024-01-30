@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -21,12 +22,11 @@ public class Main {
             list.add(new Checker(x, r));
         }
 
-        list.sort((r1, r2) -> r1.left - r2.left);
+        Collections.sort(list);
 
         for (int i = 0; i < list.size() - 1; i++) {
-            if ((list.get(i).left <= list.get(i + 1).left) &&
-                    (list.get(i).right >= list.get(i + 1).left) &&
-                    (list.get(i).right <= list.get(i + 1).right)) {
+            if (list.get(i).left <= list.get(i + 1).left && list.get(i).right <= list.get(i + 1).right
+                    && list.get(i).right >= list.get(i + 1).left) {
 
                 System.out.println("NO");
 
@@ -38,7 +38,7 @@ public class Main {
     }
 }
 
-class Checker {
+class Checker implements Comparable<Checker> {
     int left;
     int right;
 
@@ -47,4 +47,9 @@ class Checker {
         this.right = x + r;
     }
 
+    @Override
+    public int compareTo(Checker o) {
+
+        return this.left - o.left;
+    }
 }
