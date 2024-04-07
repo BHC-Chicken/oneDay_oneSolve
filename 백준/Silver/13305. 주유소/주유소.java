@@ -9,36 +9,30 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        long city = Integer.parseInt(br.readLine());
+        int city = Integer.parseInt(br.readLine());
         long sum = 0;
-        long min = Integer.MAX_VALUE;
+
+        long[] load = new long[city];
+        long[] oil = new long[city];
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        ArrayList<Long> load = new ArrayList<>();
-        ArrayList<Long> oil = new ArrayList<>();
-
         for (int i = 0; i < city - 1; i++) {
-            load.add(Long.parseLong(st.nextToken()));
+            load[i] = Long.parseLong(st.nextToken());
         }
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < city - 1; i++) {
-            long num = Long.parseLong(st.nextToken());
-            if (num < min) {
-                min = num;
-            }
-            oil.add(num);
+            oil[i] = Long.parseLong(st.nextToken());
         }
 
-        for (int i = 0; i < city; i++) {
-            if (oil.get(i) != min) {
-                sum += oil.get(i) * load.get(i);
-            } else {
-                for (int j = i; j < city - 1; j++) {
-                    sum += min * load.get(j);
-                }
-                break;
+        long min = oil[0];
+
+        for (int i = 0; i < city - 1; i++) {
+            if (oil[i] < min) {
+                min = oil[i];
             }
+
+            sum += min * load[i];
         }
         System.out.println(sum);
     }
