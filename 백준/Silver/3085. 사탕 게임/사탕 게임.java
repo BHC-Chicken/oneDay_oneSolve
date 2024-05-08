@@ -65,8 +65,8 @@ public class Main {
             }
         }
 
-        int[] dx = {-1, 0, 1, 0};
-        int[] dy = {0, 1, 0, -1};
+        int[] dx = {0, 1};
+        int[] dy = {1, 0};
 
         int cx = 0;
         int cy = 0;
@@ -76,7 +76,7 @@ public class Main {
                 cx = i;
                 cy = j;
 
-                for (int k = 0; k < 4; k++) {
+                for (int k = 0; k < 2; k++) {
                     if (inRange(cx + dx[k], cy + dy[k])) {
                         swap(i, j, cx + dx[k], cy + dy[k]);
                         result = Math.max(result, check());
