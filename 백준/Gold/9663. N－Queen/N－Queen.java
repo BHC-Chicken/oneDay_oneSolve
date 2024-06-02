@@ -1,48 +1,36 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
-    static int size;
-    static int result;
-    static int[] arr;
+    static int N;
+    static int ans;
+    static public int totalNQueens() {
+        solve(0, 0, 0, 0);
 
-    static boolean queenRangeIn(int num) {
-        for (int i = 0; i < num; i++) {
-            if (arr[num] == arr[i]) {
-
-                return false;
-            } else if (Math.abs(num - i) == Math.abs(arr[num] - arr[i])) {
-
-                return false;
-            }
-        }
-
-        return true;
+        return ans;
     }
 
-    static void back(int num) {
-        if (num == size) {
-            result++;
-
+    static public void solve(int row, int hills, int next_row, int dales) {
+        int queens = (1 << N) - 1;
+        if (row == queens) {
+            ans++;
             return;
         }
-
-        for (int i = 0; i < size; i++) {
-            arr[num] = i;
-
-            if (queenRangeIn(num)) {
-                back(num + 1);
-            }
+        int positions = queens & (~(hills | next_row | dales));
+        while (positions != 0) {
+            int pos = positions & (-positions);
+            positions -= pos;
+            solve(row | pos, (hills | pos) << 1, next_row | pos, (dales | pos) >> 1);
         }
     }
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        size = Integer.parseInt(br.readLine());
-        arr = new int[size];
-
-        back(0);
+        N = Integer.parseInt(br.readLine());
+        int result = totalNQueens();
 
         System.out.println(result);
     }
