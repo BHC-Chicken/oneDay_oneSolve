@@ -1,61 +1,58 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.StringTokenizer;
 
 public class Main {
-    static int n;
-    static int m;
-    static int count;
-    static boolean[] visit;
-    static ArrayList<Integer>[] arr;
+    static int[][] map;
+    static boolean[] visited = new boolean[100001];
 
-    static void dfs(int index) {
-        if (visit[index]) {
-            return;
-        } else {
-            visit[index] = true;
-            for (int i : arr[index]) {
-                if (!visit[i]) {
-                    dfs(i);
-                }
-            }
-        }
-    }
+    static int vertex;
+    static int edge;
+    static int cnt;
 
     public static void main(String[] args) throws IOException {
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
+        vertex = Integer.parseInt(st.nextToken());
+        edge = Integer.parseInt(st.nextToken());
 
-        visit = new boolean[n + 1];
-        arr = new ArrayList[n + 1];
+        map = new int[vertex + 1][vertex + 1];
+        visited = new boolean[vertex + 1];
 
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = new ArrayList<>();
-        }
+        for (int i = 0; i < edge; i++) {
 
-        for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
 
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-
-            arr[a].add(b);
-            arr[b].add(a);
+            map[u][v] = 1;
+            map[v][u] = 1;
         }
 
-        for (int i = 1; i <= n; i++) {
-            if (!visit[i]) {
+        for (int i = 1; i <= vertex; i++) {
+            if (!visited[i]) {
                 dfs(i);
-                count++;
+                cnt++;
             }
         }
-        System.out.println(count);
+
+        System.out.println(cnt);
+    }
+
+    static void dfs(int index) {
+        if (visited[index]) {
+            return;
+        }
+
+        visited[index] = true;
+
+        for (int i = 1; i <= vertex; i++) {
+            if (map[index][i] == 1 && !visited[i]) {
+                dfs(i);
+            }
+        }
     }
 }
-
