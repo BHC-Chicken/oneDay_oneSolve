@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -10,7 +10,7 @@ public class Main {
         int n = Integer.parseInt(br.readLine());
 
         int result = 0;
-        LinkedList<String> daegun = new LinkedList<>();
+        ArrayList<String> daegun = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
             daegun.add(br.readLine());
