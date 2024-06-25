@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
@@ -10,7 +10,7 @@ public class Main {
     static int m;
     static int[][] map;
     static boolean[][] visited;
-    static Queue<Pair> queue = new ArrayDeque<>();
+    static Queue<Pair> queue = new LinkedList<>();
 
     static int[] dx = {1, 0, -1, 0};
     static int[] dy = {0, 1, 0, -1};
