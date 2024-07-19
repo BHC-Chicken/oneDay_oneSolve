@@ -4,45 +4,42 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int num = Integer.parseInt(st.nextToken());
-        int value = Integer.parseInt(st.nextToken());
-        long max = 0;
-        int[] arr= new int[num];
+        int k = Integer.parseInt(st.nextToken());
+        int n = Integer.parseInt(st.nextToken());
 
-        for (int i = 0; i < num; i++) {
-            arr[i] = Integer.parseInt(br.readLine());
-            if (max < arr[i]) {
-                max = arr[i];
-            }
+        int[] len = new int[k];
+
+        long left = 0;
+        long right = Integer.MIN_VALUE;
+
+        for (int i = 0; i < k; i++) {
+            int num = Integer.parseInt(br.readLine());
+
+            len[i] = num;
+            right = Math.max(right, num);
         }
 
-        max++;
+        right++;
 
-        long min = 0;
-        long mid = 0;
-
-        while (min < max) {
-            mid = (min + max) / 2;
+        while (left < right) {
             long count = 0;
+            long mid = (left + right) / 2;
 
-            for (int i = 0; i < arr.length; i++) {
-                count += arr[i] / mid;
+            for (int i = 0; i < k; i++) {
+                count += len[i] / mid;
             }
 
-            if (count < value) {
-                max = mid;
+            if (count < n) {
+                right = mid;
             } else {
-                min = mid + 1;
+                left = mid + 1;
             }
         }
 
-        System.out.println(min - 1);
-
+        System.out.println(left - 1);
     }
-
 }
