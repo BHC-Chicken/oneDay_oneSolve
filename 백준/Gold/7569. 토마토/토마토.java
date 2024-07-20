@@ -15,9 +15,9 @@ public class Main {
         return x >= 0 && x < n && y >= 0 && y < m && z >= 0 && z < h;
     }
 
-    static int[] dh = {1, -1};
-    static int[] dx = {1, 0, -1, 0};
-    static int[] dy = {0, 1, 0, -1};
+    static int[] dh = {0, 0, 0, 0, 1, -1};
+    static int[] dx = {1, 0, -1, 0, 0, 0};
+    static int[] dy = {0, 1, 0, -1, 0, 0};
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -63,22 +63,14 @@ public class Main {
             for (int z = 0; z < size; z++) {
                 Tuple start = queue.poll();
 
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 6; i++) {
                     int nx = start.x + dx[i];
                     int ny = start.y + dy[i];
-
-                    if (inRange(nx, ny, start.z) && map[nx][ny][start.z] == 0) {
-                        queue.add(new Tuple(nx, ny, start.z));
-                        map[nx][ny][start.z] = 1;
-                    }
-                }
-
-                for (int i = 0; i < 2; i++) {
                     int nz = start.z + dh[i];
 
-                    if (inRange(start.x, start.y, nz) && map[start.x][start.y][nz] == 0) {
-                        queue.add(new Tuple(start.x, start.y, nz));
-                        map[start.x][start.y][nz] = 1;
+                    if (inRange(nx, ny, nz) && map[nx][ny][nz] == 0) {
+                        queue.add(new Tuple(nx, ny, nz));
+                        map[nx][ny][nz] = 1;
                     }
                 }
             }
