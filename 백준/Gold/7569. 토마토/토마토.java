@@ -10,7 +10,6 @@ public class Main {
     static int m;
     static int h;
     static int[][][] map;
-    static boolean[][][] visited;
 
     static boolean inRange(int x, int y, int z) {
         return x >= 0 && x < n && y >= 0 && y < m && z >= 0 && z < h;
@@ -32,7 +31,6 @@ public class Main {
         int zeroCount = 0;
 
         map = new int[n][m][h];
-        visited = new boolean[n][m][h];
         Queue<Tuple> queue = new LinkedList<>();
 
         for (int i = 0; i < h; i++) {
@@ -64,15 +62,13 @@ public class Main {
 
             for (int z = 0; z < size; z++) {
                 Tuple start = queue.poll();
-                visited[start.x][start.y][start.z] = true;
 
                 for (int i = 0; i < 4; i++) {
                     int nx = start.x + dx[i];
                     int ny = start.y + dy[i];
 
-                    if (inRange(nx, ny, start.z) && !visited[nx][ny][start.z] && map[nx][ny][start.z] == 0) {
+                    if (inRange(nx, ny, start.z) && map[nx][ny][start.z] == 0) {
                         queue.add(new Tuple(nx, ny, start.z));
-                        visited[nx][ny][start.z] = true;
                         map[nx][ny][start.z] = 1;
                     }
                 }
@@ -80,10 +76,8 @@ public class Main {
                 for (int i = 0; i < 2; i++) {
                     int nz = start.z + dh[i];
 
-                    if (inRange(start.x, start.y, nz) && !visited[start.x][start.y][nz]
-                            && map[start.x][start.y][nz] == 0) {
+                    if (inRange(start.x, start.y, nz) && map[start.x][start.y][nz] == 0) {
                         queue.add(new Tuple(start.x, start.y, nz));
-                        visited[start.x][start.y][nz] = true;
                         map[start.x][start.y][nz] = 1;
                     }
                 }
