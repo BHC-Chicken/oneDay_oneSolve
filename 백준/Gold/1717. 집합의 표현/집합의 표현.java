@@ -19,11 +19,7 @@ public class Main {
         y = find(y);
 
         if (x != y) {
-            if (x < y) {
-                arr[y] = x;
-            } else {
-                arr[x] = y;
-            }
+            arr[x] = y;
         }
     }
 
