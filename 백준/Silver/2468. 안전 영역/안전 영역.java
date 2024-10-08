@@ -1,84 +1,101 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.StringTokenizer;
 
 public class Main {
-    static int n;
-    static int[][] map;
-    static boolean[][] visited;
-    static int max = Integer.MIN_VALUE;
-    static int result = Integer.MIN_VALUE;
-
-    static int[] dx = {1, 0, -1, 0};
-    static int[] dy = {0, 1, 0, -1};
-
-    static boolean inRange(int x, int y) {
-        return x >= 0 && x < n && y >= 0 && y < n;
-    }
-
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        n = Integer.parseInt(br.readLine());
 
-        map = new int[n][n];
+        SafeAreaSolution SAS = new SafeAreaSolution();
+        SAS.init();
+        SAS.solve();
+    }
+}
 
-        for (int i = 0; i < n; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < n; j++) {
-                int num = Integer.parseInt(st.nextToken());
-                map[i][j] = num;
-                max = Math.max(max, num);
-            }
-        }
+class SafeAreaSolution {
 
-        for (int height = 0; height < max; height++) {
-            visited = new boolean[n][n];
-            Queue<Pair> pairs = new LinkedList<>();
-            int count = 0;
+    static int[] dx = {-1, 0, 1, 0};
+    static int[] dy = {0, -1, 0, 1};
 
-            for (int j = 0; j < n; j++) {
-                for (int k = 0; k < n; k++) {
-                    if (map[j][k] > height && !visited[j][k]) {
-                        count++;
-                        pairs.add(new Pair(j, k));
+    static int max;
+    static int[][] map, sArea;
+    static boolean[][] visited;
 
-                        while (!pairs.isEmpty()) {
-                            Pair pair = pairs.poll();
-                            int x = pair.x;
-                            int y = pair.y;
+    static int size;
 
-                            visited[x][y] = true;
+    public void solve() {
 
-                            for (int l = 0; l < 4; l++) {
-                                int nx = x + dx[l];
-                                int ny = y + dy[l];
+        int result = 0;
 
-                                if (inRange(nx, ny) && map[nx][ny] > height && !visited[nx][ny]) {
-                                    pairs.add(new Pair(nx, ny));
-                                    visited[nx][ny] = true;
-                                }
-                            }
-                        }
+        for(int depth = 0; depth <= max + 1; depth++) {
+
+            int cnt = 0;
+            findArea(depth);
+            visited = new boolean[size][size];
+
+            for(int r = 0; r < size; r++) {
+                for(int c = 0; c < size; c++) {
+                    if(!visited[r][c] && sArea[r][c] == 1) {
+                        cnt++;
+                        dfs(r, c);
                     }
                 }
             }
 
-            result = Math.max(result, count);
+            result = Math.max(result, cnt);
         }
 
         System.out.println(result);
     }
-}
 
-class Pair {
-    int x;
-    int y;
+    public void dfs(int row, int col) {
 
-    public Pair(int x, int y) {
-        this.x = x;
-        this.y = y;
+        visited[row][col] = true;
+
+        for(int dir = 0; dir < 4; dir++) {
+
+            int nRow = row + dx[dir];
+            int nCol = col + dy[dir];
+
+            if(nRow >= 0 && nCol >= 0 && nRow < size && nCol < size && !visited[nRow][nCol] && sArea[nRow][nCol] == 1) {
+                dfs(nRow, nCol);
+            }
+        }
+    }
+
+    public void findArea(int depth) {
+
+        sArea = new int[size][size];
+
+        for(int i = 0; i < size; i++) {
+            for(int j = 0; j < size; j++) {
+                if(map[i][j] >= depth) {
+                    sArea[i][j] = 1;
+                }
+            }
+        }
+    }
+
+    public void init() throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+
+        size = Integer.parseInt(br.readLine());
+        map = new int[size][size];
+        visited = new boolean[size][size];
+
+        for(int r = 0; r < size; r++) {
+            st = new StringTokenizer(br.readLine());
+            for(int c = 0; c < size; c++) {
+                int num = Integer.parseInt(st.nextToken());
+                map[r][c] = num;
+
+                max = Math.max(num, max);
+            }
+        }
+
     }
 }
