@@ -29,7 +29,7 @@ class SafeAreaSolution {
 
         int result = 0;
 
-        for(int depth = 0; depth <= max + 1; depth++) {
+        for(int depth = 0; depth <= max; depth++) {
 
             int cnt = 0;
             findArea(depth);
