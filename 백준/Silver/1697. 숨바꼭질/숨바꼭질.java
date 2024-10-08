@@ -6,49 +6,74 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
-    static int n;
-    static int k;
-    static int[] visited = new int[100001];
+    public static void main(String[] args) throws IOException {
 
-    static int bfs() {
+        HideAndSeekSolution HASS = new HideAndSeekSolution();
+        HASS.init();
+        HASS.solve();
+    }
+}
+
+class HideAndSeekSolution {
+
+    static int start, end;
+
+    static int[] path;
+    static boolean[] visited;
+
+    public void solve() {
+
+        int res = bfs();
+        System.out.print(res);
+    }
+
+    public int bfs() {
+
         Queue<Integer> queue = new LinkedList<>();
-        queue.add(n);
-        visited[n] = 0;
+        queue.add(start);
+        visited[start] = true;
 
         while (!queue.isEmpty()) {
-            int num = queue.poll();
 
-            if (num == k) {
-
-                return visited[num];
+            int cur = queue.poll();
+            if (cur == end) {
+                return path[end];
             }
 
-            if (num - 1 >= 0 && visited[num - 1] == 0) {
-                queue.add(num - 1);
-                visited[num - 1] = visited[num] + 1;
+            int up = cur + 1;
+            if (up < 100001 && !visited[up]) {
+                queue.add(up);
+                visited[up] = true;
+                path[up] = path[cur] + 1;
             }
 
-            if (num + 1 <= 100000 && visited[num + 1] == 0) {
-                queue.add(num + 1);
-                visited[num + 1] = visited[num] + 1;
+            int down = cur - 1;
+            if (down >= 0 && !visited[down]) {
+                queue.add(down);
+                visited[down] = true;
+                path[down] = path[cur] + 1;
             }
 
-            if (num * 2 <= 100000 && visited[num * 2] == 0) {
-                queue.add(num * 2);
-                visited[num * 2] = visited[num] + 1;
+            int teleport = cur * 2;
+            if (teleport < 100001 && !visited[teleport]) {
+                queue.add(teleport);
+                visited[teleport] = true;
+                path[teleport] = path[cur] + 1;
             }
         }
 
-        return 0;
+        return -1;
     }
 
-    public static void main(String[] args) throws IOException {
+    public void init() throws IOException {
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        n = Integer.parseInt(st.nextToken());
-        k = Integer.parseInt(st.nextToken());
+        start = Integer.parseInt(st.nextToken());
+        end = Integer.parseInt(st.nextToken());
 
-        System.out.println(bfs());
+        path = new int[100001];
+        visited = new boolean[100001];
     }
 }
