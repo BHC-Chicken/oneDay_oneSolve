@@ -13,14 +13,14 @@ public class Main {
     static int bfs() {
         Queue<Integer> queue = new LinkedList<>();
         queue.add(n);
-        visited[n] = 1;
+        visited[n] = 0;
 
         while (!queue.isEmpty()) {
             int num = queue.poll();
 
             if (num == k) {
 
-                return visited[num] - 1;
+                return visited[num];
             }
 
             if (num - 1 >= 0 && visited[num - 1] == 0) {
