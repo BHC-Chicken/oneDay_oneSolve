@@ -1,25 +1,47 @@
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 class Solution {
     public int solution(int x, int y, int n) {
-        int[] dp = new int[y + 1];
+        Queue<Pair> queue = new ArrayDeque<>();
+        boolean[] visited = new boolean[3000001];
 
-        for (int i = x; i <= y; i++) {
-            if (i != x && dp[i] == 0) {
-                dp[i] = -1;
+        queue.add(new Pair(x, 0));
+        visited[x] = true;
 
-                continue;
+        while (!queue.isEmpty()) {
+            Pair p = queue.poll();
+
+            if (p.now == y) {
+                return p.count;
             }
 
-            if (i + n <= y) {
-                dp[i + n] = (dp[i + n] == 0) ? dp[i] + 1 : Math.min(dp[i] + 1, dp[i + n]);
+            if (!visited[p.now + n] && p.now + n <= y) {
+                queue.add(new Pair(p.now + n, p.count + 1));
+                visited[p.now + n] = true;
             }
-            if (i * 2 <= y) {
-                dp[i * 2] = (dp[i * 2] == 0) ? dp[i] + 1 : Math.min(dp[i] + 1, dp[i * 2]);
+
+            if (!visited[p.now * 2] && p.now * 2 <= y) {
+                queue.add(new Pair(p.now * 2, p.count + 1));
+                visited[p.now * 2] = true;
             }
-            if (i * 3 <= y) {
-                dp[i * 3] = (dp[i * 3] == 0) ? dp[i] + 1 : Math.min(dp[i] + 1, dp[i * 3]);
+
+            if (!visited[p.now * 3] && p.now * 3 <= y) {
+                queue.add(new Pair(p.now * 3, p.count + 1));
+                visited[p.now * 3] = true;
             }
         }
-        
-        return dp[y];
+
+        return -1;
+    }
+}
+
+class Pair {
+    int now;
+    int count;
+
+    public Pair(int now, int count) {
+        this.now = now;
+        this.count = count;
     }
 }
