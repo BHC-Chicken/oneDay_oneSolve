@@ -62,13 +62,3 @@ public class Main {
         System.out.println(result);
     }
 }
-
-class Pair {
-    int num;
-    int date;
-
-    public Pair(int num, int date) {
-        this.num = num;
-        this.date = date;
-    }
-}
