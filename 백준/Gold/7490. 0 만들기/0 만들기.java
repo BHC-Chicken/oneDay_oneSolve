@@ -12,7 +12,7 @@ public class Main {
 
         StringBuilder sb = new StringBuilder();
         StringBuilder complete = new StringBuilder();
-        String word = calc.toString().replaceAll(" ", "");
+        String word = calc.toString().replace(" ", "");
 
         for (int i = 0; i < word.length(); i++) {
             if (word.charAt(i) - '0' > 0 && word.charAt(i) - '0' < 10) {
