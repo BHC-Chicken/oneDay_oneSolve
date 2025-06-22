@@ -13,82 +13,23 @@ public class Main {
     }
 
     static void queen(int x, int y) {
-        for (int i = x + 1; i <= n; i++) {
-            if (map[i][y] == 2) {
-                break;
+        int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+        for (int dir = 0; dir < 8; dir++) {
+            int nx = x;
+            int ny = y;
+
+            while (true) {
+                nx += dx[dir];
+                ny += dy[dir];
+
+                if (!inRange(nx, ny) || map[nx][ny] == 2) {
+                    break;
+                }
+
+                map[nx][ny] = 1;
             }
-
-            map[i][y] = 1;
-        }
-
-        for (int i = x - 1; i >= 0; i--) {
-            if (map[i][y] == 2) {
-                break;
-            }
-
-            map[i][y] = 1;
-        }
-
-        for (int i = y + 1; i <= m; i++) {
-            if (map[x][i] == 2) {
-                break;
-            }
-
-            map[x][i] = 1;
-        }
-
-        for (int i = y - 1; i >= 0; i--) {
-            if (map[x][i] == 2) {
-                break;
-            }
-
-            map[x][i] = 1;
-        }
-
-        int max = Math.max(n, m);
-
-        for (int i = 1; i <= max; i++) {
-            int nx = x + i;
-            int ny = y + i;
-
-            if (!inRange(nx, ny) || map[nx][ny] == 2) {
-                break;
-            }
-
-            map[nx][ny] = 1;
-        }
-
-        for (int i = 1; i <= max; i++) {
-            int nx = x - i;
-            int ny = y - i;
-
-            if (!inRange(nx, ny) || map[nx][ny] == 2) {
-                break;
-            }
-
-            map[nx][ny] = 1;
-        }
-
-        for (int i = 1; i < max; i++) {
-            int nx = x + i;
-            int ny = y - i;
-
-            if (!inRange(nx, ny) || map[nx][ny] == 2) {
-                break;
-            }
-
-            map[nx][ny] = 1;
-        }
-
-        for (int i = 1; i < max; i++) {
-            int nx = x - i;
-            int ny = y + i;
-
-            if (!inRange(nx, ny) || map[nx][ny] == 2) {
-                break;
-            }
-
-            map[nx][ny] = 1;
         }
     }
 
