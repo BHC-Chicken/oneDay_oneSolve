@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -29,6 +30,8 @@ public class Main {
         map = new String[r][c];
         visited = new boolean[r][c];
 
+        ArrayList<Pair> list = new ArrayList<>();
+
         for (int i = 0; i < r; i++) {
             String[] split = br.readLine().split("");
             for (int j = 0; j < c; j++) {
@@ -36,55 +39,57 @@ public class Main {
 
                 if (map[i][j].equals("o")) {
                     o++;
+                    list.add(new Pair(i, j));
                 } else if (map[i][j].equals("v")) {
                     v++;
+                    list.add(new Pair(i, j));
+                } else if (map[i][j].equals(".")) {
+                    list.add(new Pair(i, j));
                 }
             }
         }
 
-        for (int i = 0; i < r; i++) {
-            for (int j = 0; j < c; j++) {
-                if (!map[i][j].equals("#") && !visited[i][j]) {
-                    int countO = 0;
-                    int countV = 0;
+        for (Pair start : list) {
+            if (!visited[start.x][start.y]) {
+                int countO = 0;
+                int countV = 0;
 
-                    ArrayDeque<Pair> pairs = new ArrayDeque<>();
-                    pairs.add(new Pair(i, j));
-                    visited[i][j] = true;
+                ArrayDeque<Pair> pairs = new ArrayDeque<>();
+                pairs.add(new Pair(start.x, start.y));
+                visited[start.x][start.y] = true;
 
-                    if (map[i][j].equals("o")) {
-                        countO++;
-                    } else if (map[i][j].equals("v")) {
-                        countV++;
-                    }
+                if (map[start.x][start.y].equals("o")) {
+                    countO++;
+                } else if (map[start.x][start.y].equals("v")) {
+                    countV++;
+                }
 
-                    while (!pairs.isEmpty()) {
-                        Pair pair = pairs.poll();
-                        int x = pair.x;
-                        int y = pair.y;
+                while (!pairs.isEmpty()) {
+                    Pair pair = pairs.poll();
+                    int x = pair.x;
+                    int y = pair.y;
 
-                        for (int k = 0; k < 4; k++) {
-                            int nx = x + dx[k];
-                            int ny = y + dy[k];
+                    for (int k = 0; k < 4; k++) {
+                        int nx = x + dx[k];
+                        int ny = y + dy[k];
 
-                            if (inRange(nx, ny) && !map[nx][ny].equals("#") && !visited[nx][ny]) {
-                                if (map[nx][ny].equals("o")) {
-                                    countO++;
-                                } else if (map[nx][ny].equals("v")) {
-                                    countV++;
-                                }
-
-                                visited[nx][ny] = true;
-                                pairs.add(new Pair(nx, ny));
+                        if (inRange(nx, ny) && !map[nx][ny].equals("#") && !visited[nx][ny]) {
+                            if (map[nx][ny].equals("o")) {
+                                countO++;
+                            } else if (map[nx][ny].equals("v")) {
+                                countV++;
                             }
+
+                            visited[nx][ny] = true;
+                            pairs.add(new Pair(nx, ny));
                         }
                     }
+                }
 
-                    if (countO > countV) {
-                        v -= countV;
-                    } else {
-                        o -= countO;
-                    }
+                if (countO > countV) {
+                    v -= countV;
+                } else {
+                    o -= countO;
                 }
             }
         }
