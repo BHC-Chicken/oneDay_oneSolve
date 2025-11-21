@@ -3,20 +3,21 @@ import java.util.Stack;
 class Solution {
     public int solution(int[] order) {
         int answer = 0;
-        int index = 0;
         Stack<Integer> stack = new Stack<>();
+        int currentBox = 1;
 
-        for (int i = 1; i <= order.length; i++) {
-            stack.push(i);
+        for (int target : order) {
+            while (currentBox <= target) {
+                stack.push(currentBox);
+                currentBox++;
+            }
 
-            while (!stack.isEmpty()) {
-                if (stack.peek() == order[index]) {
-                    stack.pop();
-                    index++;
-                    answer++;
-                } else {
-                    break;
-                }
+            if (!stack.isEmpty() && stack.peek() == target) {
+                stack.pop();
+                answer++;
+            } else {
+
+                break;
             }
         }
         
