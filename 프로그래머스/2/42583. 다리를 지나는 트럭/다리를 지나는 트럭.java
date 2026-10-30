@@ -2,35 +2,41 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 class Solution {
-    public int solution(int bridge_length, int weight, int[] truck_weights) {
-        int answer = 0;
+    public int solution(
+        int bridge_length,
+        int weight,
+        int[] truck_weights
+    ) {
+        int time = 0;
         int totalWeight = 0;
 
-        Queue<Integer> queue = new ArrayDeque<>();
+        Queue<int[]> bridge = new ArrayDeque<>();
 
         for (int truck : truck_weights) {
-            while (true) {
-                if (queue.isEmpty()) {
-                    queue.add(truck);
-                    totalWeight += truck;
-                    answer++;
-                    break;
-                } else if (bridge_length == queue.size()) {
-                    totalWeight -= queue.poll();
-                } else {
-                    if (totalWeight + truck <= weight) {
-                        queue.add(truck);
-                        totalWeight += truck;
-                        answer++;
-                        break;
-                    } else {
-                        queue.add(0);
-                        answer++;
-                    }
+            time++;
+
+            while (!bridge.isEmpty()
+                    && bridge.peek()[1] <= time) {
+                totalWeight -= bridge.poll()[0];
+            }
+
+            while (totalWeight + truck > weight
+                    || bridge.size() >= bridge_length) {
+
+                time = bridge.peek()[1];
+
+                while (!bridge.isEmpty()
+                        && bridge.peek()[1] <= time) {
+                    totalWeight -= bridge.poll()[0];
                 }
             }
+
+            bridge.offer(
+                new int[]{truck, time + bridge_length}
+            );
+            totalWeight += truck;
         }
-        
-        return answer + bridge_length;
+
+        return time + bridge_length;
     }
 }
