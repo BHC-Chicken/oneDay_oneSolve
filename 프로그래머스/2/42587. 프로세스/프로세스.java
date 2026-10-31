@@ -1,36 +1,43 @@
-import java.util.Queue;
-import java.util.LinkedList;
-import java.util.Collections;
+import java.util.*;
 
 class Solution {
     public int solution(int[] priorities, int location) {
-        int answer = 1;
+        int answer = 0;
         
-        Queue<Integer> priority = new LinkedList<>();
-        Queue<Integer> turn = new LinkedList<>();
+        Queue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+        Queue<Pair> queue = new ArrayDeque<>();
         
         for (int i = 0; i < priorities.length; i++) {
-            priority.add(priorities[i]);
-            turn.add(i);
+            Pair pair = new Pair(i, priorities[i]);
+            pq.add(priorities[i]);
+            queue.add(pair);
         }
         
-        int max = Collections.max(priority);
-        
-        while (!priority.isEmpty()) {
-            int num = priority.poll();
-            int t = turn.poll();
+        while (!queue.isEmpty()) {
+            Pair current = queue.poll();
             
-            if (num == max && t == location) {
-                return answer;
-            } else if (num == max) {
+            if (current.priority == pq.peek()) {
+                pq.poll();
                 answer++;
-                max = Collections.max(priority);
+                
+                if (current.index == location) {
+                    return answer;
+                }
             } else {
-                priority.add(num);
-                turn.add(t);
+                queue.add(current);
             }
         }
         
         return answer;
+    }
+}
+
+class Pair {
+    int index;
+    int priority;
+    
+    public Pair(int index, int priority) {
+        this.index = index;
+        this.priority = priority;
     }
 }
