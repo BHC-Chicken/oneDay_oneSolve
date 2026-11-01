@@ -6,30 +6,32 @@ class Solution {
     
     int[] dx = {1,0,-1,0};
     int[] dy = {0,1,0,-1};
-    int[][] score;
-    boolean[][] visited;
     
-    boolean inRange(int dx, int dy) {
-        return dx >= 0 && dx < x && dy >= 0 && dy < y;
+    boolean[][] visited;
+    int[][] score;
+    
+    boolean inRange(int nx, int ny) {
+        return nx >= 0 && nx < x && ny >= 0 && ny < y;
     }
     
     void bfs(int[][] maps) {
-        Queue<Pair> queue = new LinkedList<>();
-        queue.add(new Pair(0,0));
+        Queue<Pair> queue = new ArrayDeque<>();
         visited[0][0] = true;
         score[0][0] = 1;
         
-        while(!queue.isEmpty()) {
+        queue.add(new Pair(0,0));
+        
+        while (!queue.isEmpty()) {
             Pair pair = queue.poll();
             
             for (int i = 0; i < 4; i++) {
                 int nx = pair.x + dx[i];
                 int ny = pair.y + dy[i];
                 
-                if(inRange(nx, ny) && !visited[nx][ny] && maps[nx][ny] != 0) {
+                if (inRange(nx, ny) && maps[nx][ny] != 0 && !visited[nx][ny]) {
                     queue.add(new Pair(nx, ny));
-                    visited[nx][ny] = true;
                     score[nx][ny] = score[pair.x][pair.y] + 1;
+                    visited[nx][ny] = true;
                 }
             }
         }
@@ -39,12 +41,12 @@ class Solution {
         x = maps.length;
         y = maps[0].length;
         
-        score = new int[x][y];
         visited = new boolean[x][y];
+        score = new int[x][y];
         
         bfs(maps);
         
-        if(score[x - 1][y - 1] == 0) {
+        if (score[x - 1][y - 1] == 0) {
             return -1;
         }
         
@@ -56,7 +58,7 @@ class Pair {
     int x;
     int y;
     
-    public Pair(int x, int y) {
+    public Pair (int x, int y) {
         this.x = x;
         this.y = y;
     }
