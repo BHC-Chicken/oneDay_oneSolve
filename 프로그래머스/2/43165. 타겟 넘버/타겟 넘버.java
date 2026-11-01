@@ -1,23 +1,26 @@
 class Solution {
-    static int result;
+    int answer = 0;
+    boolean[] visited;
     
-    void dfs(int depth, int[] numbers, int target, int now) {
+    void dfs(int target, int[] numbers, int depth, int now) {
         if (depth == numbers.length) {
             if (now == target) {
-                result += 1;
+                answer++;   
             }
             
             return;
         }
         
-        dfs(depth+1, numbers, target, now + numbers[depth]);
-        dfs(depth+1, numbers, target, now + (numbers[depth] * (-1)));
+        
+        dfs(target, numbers, depth + 1, now + numbers[depth]);
+        dfs(target, numbers, depth + 1, now - numbers[depth]);
     }
     
     public int solution(int[] numbers, int target) {
-        dfs(1, numbers, target, numbers[0]);
-        dfs(1, numbers, target, numbers[0] * (-1));
+        visited = new boolean[numbers.length];
         
-        return result;
+        dfs(target, numbers, 0, 0);
+        
+        return answer;
     }
 }
