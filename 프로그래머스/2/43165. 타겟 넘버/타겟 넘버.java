@@ -1,6 +1,5 @@
 class Solution {
-    int answer = 0;
-    boolean[] visited;
+    int answer;
     
     void dfs(int target, int[] numbers, int depth, int now) {
         if (depth == numbers.length) {
@@ -17,8 +16,7 @@ class Solution {
     }
     
     public int solution(int[] numbers, int target) {
-        visited = new boolean[numbers.length];
-        
+        answer = 0;
         dfs(target, numbers, 0, 0);
         
         return answer;
