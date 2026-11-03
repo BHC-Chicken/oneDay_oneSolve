@@ -1,22 +1,22 @@
-import java.util.Stack;
+import java.util.*;
 
 class Solution {
     public int[] solution(int[] numbers) {
-        Stack<Integer> stack = new Stack<>();
-        int[] answer = new int[numbers.length];
-
-        stack.push(0);
-
-        for (int i = 1; i < numbers.length; i++) {
-            while (!stack.isEmpty() && numbers[stack.peek()] < numbers[i]) {
-                answer[stack.pop()] = numbers[i];
+        int n = numbers.length;
+        int[] answer = new int[n];
+        
+        Deque<Integer> stack = new ArrayDeque<>();
+        
+        for (int i = n - 1; i >= 0; i--) {
+            int num = numbers[i];
+            
+            while (!stack.isEmpty() && stack.peek() <= num) {
+                stack.pop();
             }
-
-            stack.push(i);
-        }
-
-        while (!stack.isEmpty()) {
-            answer[stack.pop()] = -1;
+            
+            answer[i] = stack.isEmpty() ? -1 : stack.peek();
+            
+            stack.push(num);
         }
         
         return answer;
