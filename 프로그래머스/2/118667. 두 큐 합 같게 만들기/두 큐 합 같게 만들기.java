@@ -1,5 +1,4 @@
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 class Solution {
     public int solution(int[] queue1, int[] queue2) {
@@ -8,8 +7,8 @@ class Solution {
         long queue1Sum = 0;
         long queue2Sum = 0;
 
-        Queue<Integer> q1 = new LinkedList<>();
-        Queue<Integer> q2 = new LinkedList<>();
+        Queue<Integer> q1 = new ArrayDeque<>();
+        Queue<Integer> q2 = new ArrayDeque<>();
 
         for (int i = 0; i <queue1.length ; i++) {
             q1.add(queue1[i]);
