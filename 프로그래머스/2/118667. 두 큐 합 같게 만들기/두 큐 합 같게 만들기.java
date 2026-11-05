@@ -17,9 +17,17 @@ class Solution {
             q2.add(queue2[i]);
             queue2Sum += queue2[i];
         }
+        
+        long total = queue1Sum + queue2Sum;
+        
+        if (total % 2 != 0) {
+            return -1;
+        }
+        
+        int size = (q1.size() + q2.size()) * 2;
 
         while (queue1Sum != queue2Sum) {
-            if (answer > (q1.size() + q2.size()) * 2) {
+            if (answer > size) {
                 return -1;
             }
             
