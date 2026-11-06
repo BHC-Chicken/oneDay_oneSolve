@@ -2,35 +2,36 @@ import java.util.*;
 
 class Solution {
     public int solution(int k, int[] tangerine) {
-        int result = 0;
+        int answer = 0;
+        
         Map<Integer, Integer> map = new HashMap<>();
-        List<Pair> list = new ArrayList<>();
         
         for (int i : tangerine) {
             map.put(i, map.getOrDefault(i, 0) + 1);
         }
         
-        for (int i : map.keySet()) {
-            list.add(new Pair(i, map.get(i)));
+        List<Pair> list = new ArrayList<>();
+        
+        for (int key : map.keySet()) {
+            list.add(new Pair(key, map.get(key)));
         }
         
-        list.sort((a, b) -> {
-            return b.value - a.value;
+        list.sort((p1, p2) -> {
+            return p2.value - p1.value;
         });
         
-        int sum = 0;
+        int total = 0;
         
-        for (Pair pair : list) {
-            sum += pair.value;
-            result++;
+        for (Pair p : list) {
+            total += p.value;
+            answer++;
             
-            if (sum >= k) {
-                
+            if (total >= k) {
                 break;
             }
         }
         
-        return result;
+        return answer;
     }
 }
 
@@ -38,7 +39,7 @@ class Pair {
     int index;
     int value;
     
-    public Pair (int index, int value) {
+    public Pair(int index, int value) {
         this.index = index;
         this.value = value;
     }
